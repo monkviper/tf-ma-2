@@ -17,9 +17,8 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Your Shop Consultant is <strong>SHOP.COM<\/strong>",
+            "text": "Your Shop Consultant is <strong>SHOP.COM</strong>",
             "link": "#",
-            "link_text": "Start Your SHOP.COM Business",
             "font": "var(--font-body--family)",
             "font_size": "0.875rem",
             "weight": "400",
