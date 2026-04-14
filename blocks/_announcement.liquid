@@ -1,28 +1,43 @@
 {%- assign block_settings = block.settings -%}
 {%- assign plain_text = block_settings.text | strip_newlines | strip_html | strip -%}
-{%- assign block_index = section.blocks | find_index: 'id', block.id -%}
+{%- assign position = block_settings.position | default: 'auto' -%}
 
 {%- unless plain_text == '' -%}
-  <slideshow-slide
-    ref="slides[]"
+  {%- liquid
+    case position
+      when 'left'
+        assign align_class = 'announcement-bar__slide--left'
+        assign text_align = 'left'
+      when 'center'
+        assign align_class = 'announcement-bar__slide--center'
+        assign text_align = 'center'
+      when 'right'
+        assign align_class = 'announcement-bar__slide--right'
+        assign text_align = 'right'
+      else
+        assign align_class = 'announcement-bar__slide--auto'
+        assign text_align = ''
+    endcase
+  -%}
+  <div
     class="
       announcement-bar__slide
       text-block
       text-block--{{ block.id }}
-      text-block--align-center
       text-block--full-width
+      {{ align_class }}
       custom-typography
-      {% if block_settings.font_size != "" %}custom-font-size{% endif %}
-      {% if block_settings.weight != "" %}custom-font-weight{% endif %}
+      {% if block_settings.font_size != '' %}custom-font-size{% endif %}
+      {% if block_settings.weight != '' %}custom-font-weight{% endif %}
+      {% if block_settings.link != blank %}announcement-bar__slide--has-link{% endif %}
     "
     style="
       {% render 'typography-style', settings: block_settings, preset: 'custom' %}
       --width: 100%;
-      --text-align: center;
+      {% if text_align != '' %}--text-align: {{ text_align }};{% endif %}
       --line-height: 1;
     "
     {{ block.shopify_attributes }}
-    aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
   >
     <p class="announcement-bar__text">
       {{ block.settings.text }}
@@ -38,7 +53,7 @@
         </span>
       </a>
     {% endif %}
-  </slideshow-slide>
+  </div>
 {%- endunless -%}
 
 {% stylesheet %}
@@ -127,6 +142,30 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:settings.position",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "left",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "right",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "auto"
     },
     {
       "type": "header",
