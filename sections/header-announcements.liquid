@@ -55,9 +55,9 @@
   .announcement-bar__slides {
     display: grid;
     grid: [stack] auto / [stack] auto;
-    width: calc(100% - var(--button-size) * 2);
-    max-width: 680px;
-    margin-inline: auto;
+    width: 100%;
+    max-width: none;
+    padding-inline: 64px;
   }
 
   .announcement-bar__slides > * {
@@ -108,7 +108,22 @@
   }
 
   .announcement-bar__slide {
-    place-content: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar__slides {
+      padding-inline: 12px;
+    }
+
+    .announcement-bar__slide {
+      justify-content: center;
+      --font-size: 0.75rem;
+      --line-height: 1.33;
+    }
   }
 
   .announcement-bar__text:first-child {

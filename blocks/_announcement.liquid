@@ -28,7 +28,14 @@
       {{ block.settings.text }}
     </p>
 
-    {% if block_settings.link != blank %}
+    {% if block_settings.link_text != blank and block_settings.link != blank %}
+      <a
+        class="announcement-bar__link announcement-bar__link--visible"
+        href="{{ block_settings.link }}"
+      >
+        {{ block_settings.link_text | escape }}
+      </a>
+    {% elsif block_settings.link != blank %}
       <a
         class="announcement-bar__link"
         href="{{ block_settings.link }}"
@@ -110,6 +117,21 @@
   .text-block--align-right > * {
     margin-inline-start: auto;
   }
+
+  .announcement-bar__link--visible {
+    position: static;
+    text-decoration: underline;
+    color: inherit;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .announcement-bar__link--visible {
+      display: none;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -127,6 +149,11 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "t:settings.link_text"
     },
     {
       "type": "header",
