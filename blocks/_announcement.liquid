@@ -9,7 +9,6 @@
       announcement-bar__slide
       text-block
       text-block--{{ block.id }}
-      text-block--align-center
       text-block--full-width
       custom-typography
       {% if block_settings.font_size != "" %}custom-font-size{% endif %}
@@ -18,7 +17,7 @@
     style="
       {% render 'typography-style', settings: block_settings, preset: 'custom' %}
       --width: 100%;
-      --text-align: center;
+      --text-align: start;
       --line-height: 1;
     "
     {{ block.shopify_attributes }}
@@ -118,6 +117,10 @@
     margin-inline-start: auto;
   }
 
+  .announcement-bar__slide > * {
+    margin-inline: 0;
+  }
+
   .announcement-bar__text strong {
     text-decoration: underline;
   }
@@ -133,6 +136,10 @@
   }
 
   @media screen and (max-width: 749px) {
+    .announcement-bar__slide {
+      --text-align: center;
+    }
+
     .announcement-bar__link--visible {
       display: none;
     }
