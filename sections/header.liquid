@@ -1131,10 +1131,24 @@
   }
 
   /* ================================
+   * Hide desktop navigation links
+   * (Figma shows no nav in header row)
+   * ================================ */
+  @media screen and (min-width: 750px) {
+    #header-component[data-menu-style='menu'] .header__column--left header-menu {
+      display: none;
+    }
+  }
+
+  /* ================================
    * Search bar pill (center position)
    * ================================ */
   .header__columns:has(.header__column--center .search-action) {
     --header-center: 1fr;
+  }
+
+  .header__column--center .search-action {
+    width: 100%;
   }
 
   .header__column--center .search-action button {
@@ -1145,9 +1159,9 @@
     height: 40px;
     border: 1px solid var(--color-border, #DDDDDD);
     border-radius: 20px;
-    padding-inline: var(--padding-sm);
-    padding-block: var(--padding-2xs);
-    background: rgb(var(--color-background));
+    padding-inline: 16px;
+    padding-block: 8px;
+    background: rgb(var(--color-background-rgb));
     gap: var(--gap-xs);
     cursor: pointer;
   }
@@ -1156,12 +1170,43 @@
     flex-shrink: 0;
   }
 
-  .header__column--center .search-action .header-actions__text-style {
+  /* Show search icon alongside text in center pill */
+  @media screen and (min-width: 750px) {
+    .header__column--center .search-action button > span.desktop\:hidden {
+      display: flex !important;
+    }
+  }
+
+  .header__column--center .search-action button > span:not(.svg-wrapper) {
     flex-grow: 1;
     text-align: start;
     color: #767676;
     font-size: 1rem;
     line-height: 1.5;
+    font-family: var(--font-body--family);
+  }
+
+  /* ================================
+   * Show icons alongside text labels
+   * (Figma shows icon + text for cart/account)
+   * ================================ */
+  @media screen and (min-width: 750px) {
+    /* Force-show icon spans that are hidden in text mode */
+    .header__column--right header-actions span.desktop\:hidden,
+    .header__column--right .account-button span.desktop\:hidden {
+      display: inline-flex !important;
+    }
+
+    /* Icon before text for cart */
+    .header-actions__cart-icon--text {
+      flex-direction: row-reverse;
+    }
+
+    /* Icon before text for account */
+    .account-button--text shopify-account {
+      flex-direction: row-reverse;
+      gap: 4px;
+    }
   }
 
   /* ================================
@@ -1170,12 +1215,12 @@
   .header-cta {
     display: inline-flex;
     align-items: center;
-    border: 1px solid rgb(var(--color-foreground));
+    border: 1px solid rgb(var(--color-foreground-rgb));
     border-radius: 20px;
-    padding-block: var(--padding-2xs);
-    padding-inline: var(--padding-sm);
+    padding-block: 8px;
+    padding-inline: 20px;
     background: transparent;
-    color: rgb(var(--color-foreground));
+    color: rgb(var(--color-foreground-rgb));
     font-size: 1rem;
     line-height: 1.25;
     text-decoration: none;
@@ -1183,8 +1228,8 @@
     transition: background var(--animation-speed) var(--animation-easing), color var(--animation-speed) var(--animation-easing);
 
     &:hover {
-      background: rgb(var(--color-foreground));
-      color: rgb(var(--color-background));
+      background: rgb(var(--color-foreground-rgb));
+      color: rgb(var(--color-background-rgb));
     }
   }
 
@@ -1205,6 +1250,8 @@
 
   .header__column--right .dropdown-localization .icon-flag {
     margin-inline-end: 0;
+    width: 18px;
+    height: 18px;
   }
 
   /* ================================
@@ -1215,7 +1262,7 @@
       gap: 32px;
     }
 
-    .header-actions--text {
+    .header__column--right .header-actions--text {
       gap: 20px;
     }
   }
@@ -1224,13 +1271,13 @@
    * Header padding overrides
    * ================================ */
   .header__columns {
-    --padding-block-start: var(--padding-xs);
-    --padding-block-end: var(--padding-xs);
+    --padding-block-start: 12px;
+    --padding-block-end: 12px;
   }
 
   @media screen and (min-width: 750px) {
     .header .header__columns {
-      padding-inline: var(--padding-2xl);
+      padding-inline: 64px;
     }
   }
 
