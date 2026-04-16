@@ -312,46 +312,6 @@
   }
 </script>
 
-<style>
-  /* Swap account icon to Figma person-in-circle */
-  @media screen and (min-width: 750px) {
-    .account-button--text span[class~="desktop:hidden"] .account-button__icon {
-      display: none !important;
-    }
-    .account-button--text span[class~="desktop:hidden"]::before {
-      content: '';
-      display: block;
-      width: 20px;
-      height: 20px;
-      -webkit-mask-image: url('{{ "icon-header-account.svg" | asset_url }}');
-      mask-image: url('{{ "icon-header-account.svg" | asset_url }}');
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      background-color: currentColor;
-    }
-
-    /* Swap cart icon to Figma shopping bag */
-    .header-actions__cart-icon--text span[class~="desktop:hidden"] svg {
-      display: none !important;
-    }
-    .header-actions__cart-icon--text span[class~="desktop:hidden"]::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 28px;
-      -webkit-mask-image: url('{{ "icon-header-cart.svg" | asset_url }}');
-      mask-image: url('{{ "icon-header-cart.svg" | asset_url }}');
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      background-color: currentColor;
-    }
-  }
-</style>
-
 <header-component
   id="header-component"
   class="{{ class }}"
