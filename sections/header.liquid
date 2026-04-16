@@ -1198,10 +1198,19 @@
       align-items: center;
     }
 
-    /* Icon before text for cart */
+    /* Cart: icon before text via order */
     .header-actions__cart-icon--text {
-      flex-direction: row-reverse;
+      display: flex;
+      align-items: center;
       gap: 4px;
+    }
+
+    .header-actions__cart-icon--text > span.mobile\:hidden {
+      order: 2;
+    }
+
+    .header-actions__cart-icon--text > span.desktop\:hidden {
+      order: 1;
     }
 
     /* Cart icon size — Figma 28x28 */
@@ -1210,10 +1219,19 @@
       height: 28px;
     }
 
-    /* Icon before text for account */
+    /* Account: icon before text via order */
     .account-button--text shopify-account {
-      flex-direction: row-reverse;
+      display: flex;
+      align-items: center;
       gap: 4px;
+    }
+
+    .account-button--text shopify-account > span.mobile\:hidden {
+      order: 2;
+    }
+
+    .account-button--text shopify-account > span.desktop\:hidden {
+      order: 1;
     }
 
     /* Account icon size — Figma 20x20 */
