@@ -1132,7 +1132,6 @@
 
   /* ================================
    * Hide desktop navigation links
-   * (Figma shows no nav in header row)
    * ================================ */
   @media screen and (min-width: 750px) {
     #header-component[data-menu-style='menu'] .header__column--left header-menu {
@@ -1170,11 +1169,9 @@
     flex-shrink: 0;
   }
 
-  /* Show search icon alongside text in center pill */
-  @media screen and (min-width: 750px) {
-    .header__column--center .search-action button > span.desktop\:hidden {
-      display: flex !important;
-    }
+  .header__column--center .search-action button svg {
+    width: 20px;
+    height: 20px;
   }
 
   .header__column--center .search-action button > span:not(.svg-wrapper) {
@@ -1187,61 +1184,32 @@
   }
 
   /* ================================
-   * Show icons alongside text labels
-   * (Figma shows icon + text for cart/account)
+   * Cart icon + text (text mode)
    * ================================ */
   @media screen and (min-width: 750px) {
-    /* Force-show icon spans that are hidden in text mode */
-    .header__column--right header-actions span.desktop\:hidden,
-    .header__column--right .account-button span.desktop\:hidden {
-      display: inline-flex !important;
-      align-items: center;
-    }
-
-    /* Cart: icon before text via order */
     .header-actions__cart-icon--text {
       display: flex;
       align-items: center;
       gap: 4px;
     }
 
-    .header-actions__cart-icon--text > span.mobile\:hidden {
-      order: 2;
-    }
-
-    .header-actions__cart-icon--text > span.desktop\:hidden {
-      order: 1;
-    }
-
-    /* Cart icon size — Figma 28x28 */
     .header-actions__cart-icon--text .svg-wrapper svg {
       width: 28px;
       height: 28px;
     }
+  }
 
-    /* Account: icon before text via order */
+  /* ================================
+   * Account icon + text (text mode)
+   * ================================ */
+  @media screen and (min-width: 750px) {
     .account-button--text shopify-account {
       display: flex;
       align-items: center;
       gap: 4px;
     }
 
-    .account-button--text shopify-account > span.mobile\:hidden {
-      order: 2;
-    }
-
-    .account-button--text shopify-account > span.desktop\:hidden {
-      order: 1;
-    }
-
-    /* Account icon size — Figma 20x20 */
     .account-button--text .account-button__icon {
-      width: 20px;
-      height: 20px;
-    }
-
-    /* Search icon in center pill — Figma 20x20 */
-    .header__column--center .search-action button svg {
       width: 20px;
       height: 20px;
     }

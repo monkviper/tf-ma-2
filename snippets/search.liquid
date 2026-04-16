@@ -23,7 +23,7 @@
         {{ 'content.search' | t }}
       </span>
 
-      <span class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}">
+      <span class="svg-wrapper" aria-hidden="true">
         {{ 'icon-search.svg' | inline_asset_content }}
       </span>
     </button>

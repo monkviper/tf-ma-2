@@ -9,15 +9,12 @@
     class="header-actions__cart-icon{% if display_style == 'text' %} header-actions__cart-icon--text{% endif %}{% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
     data-testid="cart-icon"
   >
-    <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
-      {{ 'content.cart_title' | t }}
+    <span class="svg-wrapper" aria-hidden="true">
+      {{ 'icon-cart.svg' | inline_asset_content }}
     </span>
 
-    <span
-      class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
-      aria-hidden="true"
-    >
-      {{ 'icon-cart.svg' | inline_asset_content }}
+    <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+      {{ 'content.cart_title' | t }}
     </span>
 
     {% render 'cart-bubble', limit: 100, live_region: true %}
@@ -79,17 +76,16 @@
         {% else %}
           <span
             slot="signed-out-avatar"
-            class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
+            aria-hidden="true"
           >
-            {{ 'content.account_title' | t }}
+            {{ account_icon }}
           </span>
 
           <span
             slot="signed-out-avatar"
-            class="{% if display_style != 'icon' %}desktop:hidden{% endif %}"
-            aria-hidden="true"
+            class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
           >
-            {{ account_icon }}
+            {{ 'content.account_title' | t }}
           </span>
         {% endif %}
       </shopify-account>
