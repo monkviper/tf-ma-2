@@ -57,7 +57,18 @@
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
   endcapture
 
+  capture cta_markup
+    if section.settings.cta_text != blank
+      echo '<a href="'
+      echo section.settings.cta_link
+      echo '" class="header-cta mobile:hidden">'
+      echo section.settings.cta_text | escape
+      echo '</a>'
+    endif
+  endcapture
+
   capture actions
+    echo cta_markup
     render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
   endcapture
 
@@ -66,7 +77,21 @@
   endif
 
   # Handle localization positioning
-  if section.settings.localization_position == 'left'
+  if section.settings.search_position == 'center'
+    if section.settings.localization_position == 'left'
+      if shop.customer_accounts_enabled
+        assign order = 'drawer_search,logo,localization,menu,search,actions'
+      else
+        assign order = 'logo,localization,menu,search,drawer_search,actions'
+      endif
+    else
+      if shop.customer_accounts_enabled
+        assign order = 'drawer_search,logo,menu,search,localization,actions'
+      else
+        assign order = 'logo,menu,search,localization,drawer_search,actions'
+      endif
+    endif
+  elsif section.settings.localization_position == 'left'
     if section.settings.search_position == 'left'
       if shop.customer_accounts_enabled
         assign order = 'drawer_search,logo,search,localization,menu,actions'
@@ -1104,6 +1129,127 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* ================================
+   * Search bar pill (center position)
+   * ================================ */
+  .header__columns:has(.header__column--center .search-action) {
+    --header-center: 1fr;
+  }
+
+  .header__column--center .search-action button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--color-border, #DDDDDD);
+    border-radius: 20px;
+    padding-inline: var(--padding-sm);
+    padding-block: var(--padding-2xs);
+    background: rgb(var(--color-background));
+    gap: var(--gap-xs);
+    cursor: pointer;
+  }
+
+  .header__column--center .search-action button .svg-wrapper {
+    flex-shrink: 0;
+  }
+
+  .header__column--center .search-action .header-actions__text-style {
+    flex-grow: 1;
+    text-align: start;
+    color: #767676;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* ================================
+   * CTA button
+   * ================================ */
+  .header-cta {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgb(var(--color-foreground));
+    border-radius: 20px;
+    padding-block: var(--padding-2xs);
+    padding-inline: var(--padding-sm);
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    font-size: 1rem;
+    line-height: 1.25;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background var(--animation-speed) var(--animation-easing), color var(--animation-speed) var(--animation-easing);
+
+    &:hover {
+      background: rgb(var(--color-foreground));
+      color: rgb(var(--color-background));
+    }
+  }
+
+  /* ================================
+   * Flag-only localization
+   * ================================ */
+  .header__column--right .dropdown-localization .currency-code,
+  .header__column--right .dropdown-localization .icon-caret {
+    display: none;
+  }
+
+  .header__column--right .dropdown-localization .dropdown-localization__button {
+    padding: 0;
+    min-width: auto;
+    gap: 0;
+    margin-inline: 0;
+  }
+
+  .header__column--right .dropdown-localization .icon-flag {
+    margin-inline-end: 0;
+  }
+
+  /* ================================
+   * Right column gap overrides
+   * ================================ */
+  @media screen and (min-width: 750px) {
+    .header__column--right {
+      gap: 32px;
+    }
+
+    .header-actions--text {
+      gap: 20px;
+    }
+  }
+
+  /* ================================
+   * Header padding overrides
+   * ================================ */
+  .header__columns {
+    --padding-block-start: var(--padding-xs);
+    --padding-block-end: var(--padding-xs);
+  }
+
+  @media screen and (min-width: 750px) {
+    .header .header__columns {
+      padding-inline: var(--padding-2xl);
+    }
+  }
+
+  /* ================================
+   * Mobile overrides
+   * ================================ */
+  @media screen and (max-width: 749px) {
+    .header-cta,
+    .header__column--center,
+    .dropdown-localization {
+      display: none;
+    }
+
+    .header__columns {
+      --padding-block-start: 10px;
+      --padding-block-end: 10px;
+      padding-inline: 0 var(--padding-sm);
+    }
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1217,6 +1363,10 @@
         {
           "value": "left",
           "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
         },
         {
           "value": "right",
@@ -1534,6 +1684,21 @@
       ],
       "default": "none",
       "visible_if": "{{ section.settings.actions_display_style == 'text' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.cta"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "t:settings.cta_text",
+      "default": "Take Quiz"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "t:settings.cta_link"
     },
     {
       "type": "header",
