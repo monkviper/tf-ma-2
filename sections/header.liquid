@@ -1195,17 +1195,37 @@
     .header__column--right header-actions span.desktop\:hidden,
     .header__column--right .account-button span.desktop\:hidden {
       display: inline-flex !important;
+      align-items: center;
     }
 
     /* Icon before text for cart */
     .header-actions__cart-icon--text {
       flex-direction: row-reverse;
+      gap: 4px;
+    }
+
+    /* Cart icon size — Figma 28x28 */
+    .header-actions__cart-icon--text .svg-wrapper svg {
+      width: 28px;
+      height: 28px;
     }
 
     /* Icon before text for account */
     .account-button--text shopify-account {
       flex-direction: row-reverse;
       gap: 4px;
+    }
+
+    /* Account icon size — Figma 20x20 */
+    .account-button--text .account-button__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Search icon in center pill — Figma 20x20 */
+    .header__column--center .search-action button svg {
+      width: 20px;
+      height: 20px;
     }
   }
 
